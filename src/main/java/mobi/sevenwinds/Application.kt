@@ -21,6 +21,7 @@ import mobi.sevenwinds.modules.DatabaseFactory
 import mobi.sevenwinds.modules.initSwagger
 import mobi.sevenwinds.modules.serviceRouting
 import mobi.sevenwinds.modules.swaggerRouting
+import org.jetbrains.exposed.exceptions.EntityNotFoundException
 import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
 
@@ -49,7 +50,7 @@ fun Application.module() {
         level = Level.INFO
         filter { call ->
             Config.logAllRequests ||
-            call.request.path().startsWith("/")
+                    call.request.path().startsWith("/")
                     && (call.response.status()?.value ?: 0) >= 500
         }
     }
@@ -82,8 +83,11 @@ fun Application.module() {
         exception<NotFoundException> { cause ->
             call.respond(HttpStatusCode.NotFound, cause.message ?: "")
         }
+        exception<EntityNotFoundException> { cause ->
+            call.respond(HttpStatusCode.UnprocessableEntity, cause.message ?: "")
+        }
         exception<OpenAPIRequiredFieldException> { cause ->
-            call.respond(HttpStatusCode.BadRequest, cause.message ?: "")
+            call.respond(HttpStatusCode.BadRequest, cause.message)
         }
         exception<MissingKotlinParameterException> { cause ->
             call.respond(HttpStatusCode.BadRequest, cause.message ?: "")

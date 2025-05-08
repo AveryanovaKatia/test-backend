@@ -28,6 +28,9 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.30")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.30")
+
     implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation("io.ktor:ktor-jackson:$ktor_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
@@ -51,7 +54,7 @@ dependencies {
 
     implementation("org.jetbrains.exposed:exposed:0.17.13")
     implementation("com.zaxxer:HikariCP:2.7.8")
-    implementation("org.flywaydb:flyway-core:5.2.4")
+    implementation("org.flywaydb:flyway-core:9.5.1")
 
     implementation("com.squareup.retrofit2:retrofit:2.3.0")
     implementation("com.squareup.retrofit2:converter-jackson:2.3.0")
